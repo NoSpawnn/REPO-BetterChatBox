@@ -23,20 +23,9 @@ internal static class InputHandlers
             {
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    int deleteStart = cursorPos - 1;
-
-                    while (deleteStart >= 0
-                            && char.IsWhiteSpace(chatMessage[deleteStart]))
-                        deleteStart--;
-
-                    if (!char.IsWhiteSpace(chatMessage[cursorPos - 1]))
-                        while (deleteStart >= 0
-                                && !char.IsWhiteSpace(chatMessage[deleteStart]))
-                            deleteStart--;
-
-                    deleteStart += 1;
-                    chatMessage = chatMessage.Remove(deleteStart, cursorPos - deleteStart);
-                    cursorPos = deleteStart;
+                    int idx = GetPreviousWordIdxFromIdx(cursorPos, chatMessage, keepWhitespace: true);
+                    chatMessage = chatMessage.Remove(idx, cursorPos - idx);
+                    cursorPos = idx;
                 }
                 else
                 {
@@ -63,18 +52,8 @@ internal static class InputHandlers
             {
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    int deleteEnd = cursorPos;
-
-                    while (deleteEnd < chatMessage.Length
-                            && char.IsWhiteSpace(chatMessage[deleteEnd]))
-                        deleteEnd++;
-
-                    if (!char.IsWhiteSpace(chatMessage[cursorPos]))
-                        while (deleteEnd < chatMessage.Length
-                                && !char.IsWhiteSpace(chatMessage[deleteEnd]))
-                            deleteEnd++;
-
-                    chatMessage = chatMessage.Remove(cursorPos, deleteEnd - cursorPos);
+                    int idx = GetNextWordIdxFromIdx(cursorPos, chatMessage, keepWhitespace: true);
+                    chatMessage = chatMessage.Remove(cursorPos, idx - cursorPos);
                 }
                 else
                 {
@@ -137,6 +116,7 @@ internal static class InputHandlers
             cursorPos = chatMessage.Length;
         }
     }
+
     internal static void HandleCursorNavigation(ref ChatManager chatManagerInstance, ref int cursorPos, string chatMessage)
     {
         if (Input.GetKeyUp(KeyCode.RightArrow)) BetterChatBox.Instance.RightArrowHeld = false;
@@ -146,14 +126,7 @@ internal static class InputHandlers
         {
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                int nextCursorPos = cursorPos - 1;
-                while (nextCursorPos >= 0
-                        && char.IsWhiteSpace(chatMessage[nextCursorPos]))
-                    nextCursorPos--;
-                while (nextCursorPos >= 0
-                        && !char.IsWhiteSpace(chatMessage[nextCursorPos]))
-                    nextCursorPos--;
-                cursorPos = nextCursorPos + 1;
+                cursorPos = GetPreviousWordIdxFromIdx(cursorPos, chatMessage, keepWhitespace: false);
             }
             else
             {
@@ -176,14 +149,7 @@ internal static class InputHandlers
         {
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                int nextCursorPos = cursorPos;
-                while (nextCursorPos < chatMessage.Length
-                        && char.IsWhiteSpace(chatMessage[nextCursorPos]))
-                    nextCursorPos++;
-                while (nextCursorPos < chatMessage.Length
-                        && !char.IsWhiteSpace(chatMessage[nextCursorPos]))
-                    nextCursorPos++;
-                cursorPos = nextCursorPos;
+                cursorPos = GetNextWordIdxFromIdx(cursorPos, chatMessage, keepWhitespace: false);
             }
             else
             {
@@ -234,5 +200,47 @@ internal static class InputHandlers
                 chatManagerInstance.CharRemoveEffect();
             }
         }
+    }
+
+    private static int GetNextWordIdxFromIdx(int from, string str, bool keepWhitespace)
+    {
+        int idx = from;
+
+        while (idx < str.Length
+                && char.IsWhiteSpace(str[idx]))
+            idx++;
+
+        if (!char.IsWhiteSpace(str[from]))
+            while (idx < str.Length
+                    && !char.IsWhiteSpace(str[idx]))
+                idx++;
+
+        if (!keepWhitespace)
+            while (idx < str.Length
+                    && !char.IsWhiteSpace(str[idx]))
+                idx++;
+
+        return idx;
+    }
+
+    private static int GetPreviousWordIdxFromIdx(int from, string str, bool keepWhitespace)
+    {
+        int idx = from - 1;
+
+        while (idx >= 0
+                && char.IsWhiteSpace(str[idx]))
+            idx--;
+
+        if (!char.IsWhiteSpace(str[from - 1]))
+            while (idx >= 0
+                    && !char.IsWhiteSpace(str[idx]))
+                idx--;
+
+        if (!keepWhitespace)
+            while (idx >= 0
+                    && !char.IsWhiteSpace(str[idx]))
+                idx--;
+
+        return idx + 1;
     }
 }
