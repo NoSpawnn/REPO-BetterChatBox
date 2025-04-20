@@ -42,6 +42,8 @@ public class ChatPatch
     [HarmonyPostfix, HarmonyPatch(nameof(ChatManager.StateSet))]
     public static void StateSetPostfix(ChatManager __instance)
     {
+        if (__instance is null || __instance.chatText is null) return;
+
         if (BetterChatBox.SavePreviousChatMessage.Value)
         {
             __instance.chatMessage = __instance
