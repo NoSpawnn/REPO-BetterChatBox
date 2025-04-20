@@ -14,17 +14,17 @@ public class BetterChatBox : BaseUnityPlugin
     private ManualLogSource _logger => base.Logger;
     internal Harmony? Harmony { get; set; }
 
-    internal const string CURSOR_STRING = "<b>|</b>";
-    internal const string EMPTY_CURSOR_STRING = "<b> </b>"; // Not sure if the bold tags are actually needed but /shruge
-    internal const int MAX_CHARS = 50;
+    internal const string CursorString = "<b>|</b>";
+    internal const string EmptyCursorString = "<b> </b>"; // Not sure if the bold tags are actually needed but /shruge
+    internal const int MaxChars = 50;
 
-    public int CursorPos { get; set; } = 0;
-    public float DeleteTimer { get; set; } = 0f;
-    public bool BackspaceHeld { get; set; } = false;
-    public bool DeleteHeld { get; set; } = false;
-    public bool LeftArrowHeld { get; set; } = false;
-    public bool RightArrowHeld { get; set; } = false;
-    public float CursorMoveTimer { get; set; } = 0f;
+    internal int CursorPos { get; set; }
+    internal float DeleteTimer { get; set; }
+    internal bool BackspaceHeld { get; set; }
+    internal bool DeleteHeld { get; set; }
+    internal bool LeftArrowHeld { get; set; }
+    internal bool RightArrowHeld { get; set; }
+    internal float CursorMoveTimer { get; set; }
 
     public static ConfigEntry<float> CursorMoveSpeed { get; private set; } = null!;
     public static ConfigEntry<float> DeleteRepeatSpeed { get; private set; } = null!;

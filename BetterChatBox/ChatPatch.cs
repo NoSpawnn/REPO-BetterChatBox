@@ -20,7 +20,7 @@ public class ChatPatch
 
         SemiFunc.InputDisableMovement();
 
-        __instance.chatText.text = chatMessage.Insert(cursorPos, Mathf.Sin(Time.time * 10f) > 0f ? BetterChatBox.CURSOR_STRING : BetterChatBox.EMPTY_CURSOR_STRING);
+        __instance.chatText.text = chatMessage.Insert(cursorPos, Mathf.Sin(Time.time * 10f) > 0f ? BetterChatBox.CursorString : BetterChatBox.EmptyCursorString);
         __instance.chatMessage = chatMessage;
 
         if (SemiFunc.InputDown(InputKey.Confirm))
@@ -47,8 +47,8 @@ public class ChatPatch
             __instance.chatMessage = __instance
                                         .chatText
                                         .text
-                                        .Replace(BetterChatBox.CURSOR_STRING, "")
-                                        .Replace(BetterChatBox.EMPTY_CURSOR_STRING, ""); // This is a bit yucky
+                                        .Replace(BetterChatBox.CursorString, "")
+                                        .Replace(BetterChatBox.EmptyCursorString, ""); // This is a bit yucky
         }
         else
         {

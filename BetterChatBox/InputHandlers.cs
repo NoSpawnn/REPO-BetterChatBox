@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using BepInEx;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 
@@ -100,7 +98,7 @@ internal static class InputHandlers
 
         foreach (var c in Input.inputString.Where(c => !char.IsControl(c)))
         {
-            if (chatMessage.Length < BetterChatBox.MAX_CHARS)
+            if (chatMessage.Length < BetterChatBox.MaxChars)
             {
                 chatManagerInstance.prevChatMessage = chatMessage;
                 chatMessage = chatMessage.Insert(cursorPos, c.ToString());
@@ -217,7 +215,7 @@ internal static class InputHandlers
             {
                 string clipboardText = GUIUtility.systemCopyBuffer.WithAllWhitespaceStripped();
                 string newText = chatMessage.Insert(cursorPos, clipboardText);
-                if (clipboardText.IsNullOrWhiteSpace() || newText.Length >= BetterChatBox.MAX_CHARS)
+                if (clipboardText.IsNullOrWhiteSpace() || newText.Length >= BetterChatBox.MaxChars)
                 {
                     ChatPatch.ChatFailInputEffect();
                 }
