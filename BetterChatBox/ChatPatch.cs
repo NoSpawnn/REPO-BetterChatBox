@@ -1,7 +1,6 @@
 using System.Linq;
 using BepInEx;
 using HarmonyLib;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 
@@ -91,6 +90,7 @@ public class ChatPatch
                 else
                 {
                     chatMessage = newText;
+                    cursorPos = newText.Length;
                     __instance.TypeEffect(Color.yellow);
                 }
             }
