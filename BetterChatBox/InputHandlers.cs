@@ -26,12 +26,16 @@ internal static class InputHandlers
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
                     int deleteStart = cursorPos - 1;
+
                     while (deleteStart >= 0
                             && char.IsWhiteSpace(chatMessage[deleteStart]))
                         deleteStart--;
-                    while (deleteStart >= 0
-                            && !char.IsWhiteSpace(chatMessage[deleteStart]))
-                        deleteStart--;
+
+                    if (!char.IsWhiteSpace(chatMessage[cursorPos - 1]))
+                        while (deleteStart >= 0
+                                && !char.IsWhiteSpace(chatMessage[deleteStart]))
+                            deleteStart--;
+
                     deleteStart += 1;
                     chatMessage = chatMessage.Remove(deleteStart, cursorPos - deleteStart);
                     cursorPos = deleteStart;
@@ -62,12 +66,16 @@ internal static class InputHandlers
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
                     int deleteEnd = cursorPos;
+
                     while (deleteEnd < chatMessage.Length
                             && char.IsWhiteSpace(chatMessage[deleteEnd]))
                         deleteEnd++;
-                    while (deleteEnd < chatMessage.Length
-                            && !char.IsWhiteSpace(chatMessage[deleteEnd]))
-                        deleteEnd++;
+
+                    if (!char.IsWhiteSpace(chatMessage[cursorPos]))
+                        while (deleteEnd < chatMessage.Length
+                                && !char.IsWhiteSpace(chatMessage[deleteEnd]))
+                            deleteEnd++;
+
                     chatMessage = chatMessage.Remove(cursorPos, deleteEnd - cursorPos);
                 }
                 else
