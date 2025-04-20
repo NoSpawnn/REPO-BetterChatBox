@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using BepInEx;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 
@@ -21,11 +23,28 @@ internal static class InputHandlers
         {
             if (Input.GetKeyDown(KeyCode.Backspace) && cursorPos > 0)
             {
-                BetterChatBox.Instance.BackspaceHeld = true;
-                BetterChatBox.Instance.DeleteTimer = BetterChatBox.InputHoldDelay.Value;
-                chatMessage = chatMessage.Remove(cursorPos - 1, 1);
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    var idx = chatMessage.LastIndexOf(' ', cursorPos - 1);
+                    if (idx == -1)
+                    {
+                        chatMessage = chatMessage[cursorPos..];
+                        cursorPos = 0;
+                    }
+                    else
+                    {
+                        chatMessage = chatMessage.Remove(idx, cursorPos - idx);
+                        cursorPos = idx;
+                    }
+                }
+                else
+                {
+                    BetterChatBox.Instance.BackspaceHeld = true;
+                    BetterChatBox.Instance.DeleteTimer = BetterChatBox.InputHoldDelay.Value;
+                    chatMessage = chatMessage.Remove(cursorPos - 1, 1);
+                    cursorPos--;
+                }
                 chatManagerInstance.CharRemoveEffect();
-                cursorPos--;
             }
             else if (BetterChatBox.Instance.BackspaceHeld && cursorPos > 0)
             {
@@ -41,9 +60,20 @@ internal static class InputHandlers
 
             if (Input.GetKeyDown(KeyCode.Delete) && cursorPos < chatMessage.Length)
             {
-                BetterChatBox.Instance.DeleteHeld = true;
-                BetterChatBox.Instance.DeleteTimer = BetterChatBox.InputHoldDelay.Value;
-                chatMessage = chatMessage.Remove(cursorPos, 1);
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    var idx = chatMessage.IndexOf(' ', cursorPos);
+                    if (idx == -1)
+                        chatMessage = chatMessage[..cursorPos];
+                    else
+                        chatMessage = chatMessage.Remove(cursorPos, idx - cursorPos);
+                }
+                else
+                {
+                    BetterChatBox.Instance.DeleteHeld = true;
+                    BetterChatBox.Instance.DeleteTimer = BetterChatBox.InputHoldDelay.Value;
+                    chatMessage = chatMessage.Remove(cursorPos, 1);
+                }
                 chatManagerInstance.CharRemoveEffect();
             }
             else if (BetterChatBox.Instance.DeleteHeld && cursorPos < chatMessage.Length)
@@ -99,7 +129,6 @@ internal static class InputHandlers
             cursorPos = chatMessage.Length;
         }
     }
-
     internal static void HandleCursorNavigation(ref ChatManager chatManagerInstance, ref int cursorPos, string chatMessage)
     {
         if (Input.GetKeyUp(KeyCode.RightArrow)) BetterChatBox.Instance.RightArrowHeld = false;
@@ -109,8 +138,14 @@ internal static class InputHandlers
         {
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                var idx = chatMessage.LastIndexOf(' ', cursorPos - 1);
-                cursorPos = idx == -1 ? 0 : idx;
+                int nextCursorPos = cursorPos - 1;
+                while (nextCursorPos >= 0
+                        && char.IsWhiteSpace(chatMessage[nextCursorPos]))
+                    nextCursorPos--;
+                while (nextCursorPos >= 0
+                        && !char.IsWhiteSpace(chatMessage[nextCursorPos]))
+                    nextCursorPos--;
+                cursorPos = nextCursorPos + 1;
             }
             else
             {
@@ -133,8 +168,14 @@ internal static class InputHandlers
         {
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                var idx = chatMessage.IndexOf(' ', cursorPos + 1);
-                cursorPos = idx == -1 ? chatMessage.Length : idx;
+                int nextCursorPos = cursorPos;
+                while (nextCursorPos < chatMessage.Length
+                        && char.IsWhiteSpace(chatMessage[nextCursorPos]))
+                    nextCursorPos++;
+                while (nextCursorPos < chatMessage.Length
+                        && !char.IsWhiteSpace(chatMessage[nextCursorPos]))
+                    nextCursorPos++;
+                cursorPos = nextCursorPos;
             }
             else
             {
