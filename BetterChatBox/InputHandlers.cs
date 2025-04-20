@@ -25,17 +25,16 @@ internal static class InputHandlers
             {
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    var idx = chatMessage.LastIndexOf(' ', cursorPos - 1);
-                    if (idx == -1)
-                    {
-                        chatMessage = chatMessage[cursorPos..];
-                        cursorPos = 0;
-                    }
-                    else
-                    {
-                        chatMessage = chatMessage.Remove(idx, cursorPos - idx);
-                        cursorPos = idx;
-                    }
+                    int deleteStart = cursorPos - 1;
+                    while (deleteStart >= 0
+                            && char.IsWhiteSpace(chatMessage[deleteStart]))
+                        deleteStart--;
+                    while (deleteStart >= 0
+                            && !char.IsWhiteSpace(chatMessage[deleteStart]))
+                        deleteStart--;
+                    deleteStart += 1;
+                    chatMessage = chatMessage.Remove(deleteStart, cursorPos - deleteStart);
+                    cursorPos = deleteStart;
                 }
                 else
                 {
@@ -62,11 +61,14 @@ internal static class InputHandlers
             {
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    var idx = chatMessage.IndexOf(' ', cursorPos);
-                    if (idx == -1)
-                        chatMessage = chatMessage[..cursorPos];
-                    else
-                        chatMessage = chatMessage.Remove(cursorPos, idx - cursorPos);
+                    int deleteEnd = cursorPos;
+                    while (deleteEnd < chatMessage.Length
+                            && char.IsWhiteSpace(chatMessage[deleteEnd]))
+                        deleteEnd++;
+                    while (deleteEnd < chatMessage.Length
+                            && !char.IsWhiteSpace(chatMessage[deleteEnd]))
+                        deleteEnd++;
+                    chatMessage = chatMessage.Remove(cursorPos, deleteEnd - cursorPos);
                 }
                 else
                 {
@@ -227,5 +229,4 @@ internal static class InputHandlers
             }
         }
     }
-
 }
