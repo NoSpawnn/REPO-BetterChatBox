@@ -1,6 +1,6 @@
 # REPO - BetterChatBox
 
-An client-side only overhaul of the chat box, making it editable and adding keybind support!
+A client-side only overhaul of the chat box, making it editable and adding keybind support!
 
 ## Keybinds
 
