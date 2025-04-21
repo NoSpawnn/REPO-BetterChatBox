@@ -7,8 +7,8 @@ A client-side only overhaul of the chat box, making it editable and adding keybi
 |                   Key                   | Action                                                                  |
 | :-------------------------------------: | ----------------------------------------------------------------------- |
 | <kbd>&#8593;</kbd> / <kbd>&#8595;</kbd> | Scroll through message history                                          |
-|            <kbd>Delete</kbd>            | Delete character ahead of cursor                                        |
-|          <kbd>Backspace</kbd>           | Delete character behind cursor                                          |
+|        <kbd>Delete</kbd> (hold)         | Delete character ahead of cursor (repeat)                               |
+|       <kbd>Backspace</kbd> (hold)       | Delete character behind cursor (repeat)                                 |
 |           <kbd>Ctrl + X</kbd>           | Delete all text (or cut to clipboard, depending on the config settings) |
 |           <kbd>Ctrl + C</kbd>           | Copy all text to the clipboard                                          |
 |           <kbd>Ctrl + V</kbd>           | Paste from your clipboard (up to the character limit)                   |
