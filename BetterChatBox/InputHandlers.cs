@@ -171,34 +171,33 @@ internal static class InputHandlers
 
     internal static void HandleClipboardOperation(ref ChatManager chatManagerInstance, ref int cursorPos, ref string chatMessage)
     {
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (!Input.GetKey(KeyCode.LeftControl)) return;
+
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            GUIUtility.systemCopyBuffer = chatMessage;
+        }
+        else if (Input.GetKeyDown(KeyCode.V))
+        {
+            string clipboardText = GUIUtility.systemCopyBuffer.WithAllWhitespaceStripped();
+            string newText = chatMessage.Insert(cursorPos, clipboardText);
+            if (clipboardText.IsNullOrWhiteSpace() || newText.Length >= BetterChatBox.MaxChars)
             {
-                GUIUtility.systemCopyBuffer = chatMessage;
+                ChatPatch.ChatFailInputEffect();
             }
-            else if (Input.GetKeyDown(KeyCode.V))
+            else
             {
-                string clipboardText = GUIUtility.systemCopyBuffer.WithAllWhitespaceStripped();
-                string newText = chatMessage.Insert(cursorPos, clipboardText);
-                if (clipboardText.IsNullOrWhiteSpace() || newText.Length >= BetterChatBox.MaxChars)
-                {
-                    ChatPatch.ChatFailInputEffect();
-                }
-                else
-                {
-                    chatMessage = newText;
-                    cursorPos = newText.Length;
-                    chatManagerInstance.TypeEffect(Color.yellow);
-                }
+                chatMessage = newText;
+                cursorPos += clipboardText.Length;
+                chatManagerInstance.TypeEffect(Color.yellow);
             }
-            else if (Input.GetKeyDown(KeyCode.X))
-            {
-                if (BetterChatBox.CutToSystemClipboard.Value) GUIUtility.systemCopyBuffer = chatMessage;
-                chatMessage = "";
-                cursorPos = 0;
-                chatManagerInstance.CharRemoveEffect();
-            }
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (BetterChatBox.CutToSystemClipboard.Value) GUIUtility.systemCopyBuffer = chatMessage;
+            chatMessage = "";
+            cursorPos = 0;
+            chatManagerInstance.CharRemoveEffect();
         }
     }
 
