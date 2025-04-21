@@ -7,7 +7,7 @@ namespace BetterChatBox;
 
 internal static class InputHandlers
 {
-    internal static void HandleTextInput(ref ChatManager chatManagerInstance, ref int cursorPos, ref string chatMessage)
+    internal static void HandleTextManip(ref ChatManager chatManagerInstance, ref int cursorPos, ref string chatMessage)
     {
         if (Input.GetKeyUp(KeyCode.Backspace))
         {

@@ -16,7 +16,7 @@ public class ChatPatch
         InputHandlers.HandleCursorNavigation(ref __instance, ref cursorPos, chatMessage);
         InputHandlers.HandleClipboardOperation(ref __instance, ref cursorPos, ref chatMessage);
         InputHandlers.HandleHistoryNavigation(ref __instance, ref cursorPos, ref chatMessage);
-        InputHandlers.HandleTextInput(ref __instance, ref cursorPos, ref chatMessage);
+        InputHandlers.HandleTextManip(ref __instance, ref cursorPos, ref chatMessage);
 
         SemiFunc.InputDisableMovement();
 
