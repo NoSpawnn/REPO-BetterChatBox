@@ -1,6 +1,6 @@
 {
     "name": "BetterChatBox",
-    "description": "Make the chat box editable and support keyboard navigation",
+    "description": "Make the chat box editable and keyboard navigable",
     "version_number": "1.0.1",
     "website_url": "https://github.com/NoSpawnn/REPO-BetterChatBox",
     "dependencies": [
