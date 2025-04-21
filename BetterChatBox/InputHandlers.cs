@@ -201,6 +201,10 @@ internal static class InputHandlers
         }
     }
 
+    // TODO: I really need to rename the keepWhitespace flag,
+    // I wrote these two functions at like 1am and now I
+    // don't really understand how they both work correctly
+    // (or if they even do, but I think they do...)
     private static int GetNextWordIdxFromIdx(int from, string str, bool keepWhitespace)
     {
         int idx = from;
