@@ -45,3 +45,6 @@ msbuild.wrn
 
 # Resharper
 inspectcode.xml
+
+# Release zips
+*.zip
