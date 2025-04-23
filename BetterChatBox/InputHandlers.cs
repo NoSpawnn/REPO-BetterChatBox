@@ -9,15 +9,10 @@ internal static class InputHandlers
 {
     internal static void HandleTextManip(ref ChatManager chatManagerInstance, ref int cursorPos, ref string chatMessage)
     {
-        if (Input.GetKeyUp(KeyCode.Backspace))
-        {
-            BetterChatBox.Instance.BackspaceHeld = false;
-        }
-        else if (Input.GetKeyUp(KeyCode.Delete))
-        {
-            BetterChatBox.Instance.DeleteHeld = false;
-        }
-        else if (chatMessage.Length > 0)
+        if (Input.GetKeyUp(KeyCode.Backspace)) BetterChatBox.Instance.BackspaceHeld = false;
+        if (Input.GetKeyUp(KeyCode.Delete)) BetterChatBox.Instance.DeleteHeld = false;
+
+        if (chatMessage.Length > 0)
         {
             if (Input.GetKeyDown(KeyCode.Backspace) && cursorPos > 0)
             {
