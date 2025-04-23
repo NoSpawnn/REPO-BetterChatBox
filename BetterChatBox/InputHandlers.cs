@@ -195,7 +195,7 @@ internal static class InputHandlers
         else if (Input.GetKeyDown(KeyCode.X))
         {
             if (BetterChatBox.CutToSystemClipboard.Value) GUIUtility.systemCopyBuffer = chatMessage;
-            chatMessage = "";
+            chatMessage = string.Empty;
             cursorPos = 0;
             chatManagerInstance.CharRemoveEffect();
         }

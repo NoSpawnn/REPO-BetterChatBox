@@ -49,13 +49,13 @@ public class ChatPatch
             __instance.chatMessage = __instance
                                         .chatText
                                         .text
-                                        .Replace(BetterChatBox.CursorString, "")
-                                        .Replace(BetterChatBox.EmptyCursorString, ""); // This is a bit yucky
+                                        .Replace(BetterChatBox.CursorString, string.Empty)
+                                        .Replace(BetterChatBox.EmptyCursorString, string.Empty); // This is a bit yucky
         }
         else
         {
-            __instance.chatMessage = "";
-            __instance.chatText.text = "";
+            __instance.chatMessage = string.Empty;
+            __instance.chatText.text = string.Empty;
         }
 
         if (!BetterChatBox.SaveCursorPosition.Value || __instance.chatMessage.Length == 0)
