@@ -1,0 +1,2 @@
+- [ ] Make history scrolling better
+- [ ] Text selection

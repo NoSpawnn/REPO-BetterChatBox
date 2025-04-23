@@ -51,6 +51,3 @@ A client-side overhaul of the chat box, making it editable and adding keybind su
 2. Download BetterChatBox
     - Download the latest release from [Thunderstore](https://thunderstore.io/c/repo/p/NoSpawnn/BetterChatBox/)
     - Place the `BetterChatBox.dll` inside `BepInEx/plugins/`
-
-## Todo
-- [ ] Make history scrolling better
