@@ -88,7 +88,9 @@ internal static class InputHandlers
 
     internal static void HandleHistoryNavigation(ref ChatManager chatManagerInstance, ref int cursorPos, ref string chatMessage)
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && chatManagerInstance.chatHistory.Count > 0)
+        if (chatManagerInstance.chatHistory.Count <= 0) return;
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (chatManagerInstance.chatHistoryIndex > 0)
                 chatManagerInstance.chatHistoryIndex--;
@@ -99,7 +101,8 @@ internal static class InputHandlers
             ChatPatch.ChatHistoryChangeEffect();
             cursorPos = chatMessage.Length;
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow) && chatManagerInstance.chatHistory.Count > 0)
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (chatManagerInstance.chatHistoryIndex < chatManagerInstance.chatHistory.Count - 1)
                 chatManagerInstance.chatHistoryIndex++;
