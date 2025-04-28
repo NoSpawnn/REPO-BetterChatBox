@@ -75,9 +75,14 @@ public class ChatPatch
     }
 
     [HarmonyPostfix, HarmonyPatch(nameof(ChatManager.StateSet))]
-    public static void StateSetPostfix(ChatManager __instance)
+    public static void StateSetPostfix(ChatManager __instance, ChatManager.ChatState newState)
     {
-        if (__instance is null || __instance.chatText is null) return;
+        if (
+            __instance is null
+            || __instance.chatText is null
+            || newState != ChatManager.ChatState.Active
+        )
+            return;
 
         if (BetterChatBox.SavePreviousChatMessage.Value)
         {
