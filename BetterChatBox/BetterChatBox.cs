@@ -60,17 +60,20 @@ public class BetterChatBox : BaseUnityPlugin
 
     private void BindConfigs()
     {
-        CursorMoveSpeed = Config.Bind("Input",
+        CursorMoveSpeed = Config.Bind(
+                "Input",
                 "Cursor Tick Speed",
                 defaultValue: 0.05f,
                 new ConfigDescription("Cursor move speed when holding an arrow key", new AcceptableValueRange<float>(0.01f, 0.1f))
             );
-        DeleteRepeatSpeed = Config.Bind("Input",
+        DeleteRepeatSpeed = Config.Bind(
+                "Input",
                 "Delete Tick Speed",
                 defaultValue: 0.05f,
                 new ConfigDescription("Character delete speed when holding backspace or delete", new AcceptableValueRange<float>(0.01f, 0.1f))
             );
-        InputHoldDelay = Config.Bind("Input",
+        InputHoldDelay = Config.Bind(
+                "Input",
                 "Input Hold Delay",
                 defaultValue: 0.5f,
                 new ConfigDescription("How long you need to hold a key before it starts repeating", new AcceptableValueRange<float>(0.1f, 1.0f))
