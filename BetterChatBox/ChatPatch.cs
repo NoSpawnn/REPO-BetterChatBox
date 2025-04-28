@@ -13,14 +13,17 @@ public class ChatPatch
         var cursorPos = BetterChatBox.Instance.CursorPos;
         var chatMessage = __instance.chatMessage;
 
+        SemiFunc.InputDisableMovement();
+
         InputHandlers.HandleCursorNavigation(ref __instance, ref cursorPos, chatMessage);
         InputHandlers.HandleClipboardOperation(ref __instance, ref cursorPos, ref chatMessage);
         InputHandlers.HandleHistoryNavigation(ref __instance, ref cursorPos, ref chatMessage);
         InputHandlers.HandleTextManip(ref __instance, ref cursorPos, ref chatMessage);
 
-        SemiFunc.InputDisableMovement();
-
-        __instance.chatText.text = chatMessage.Insert(cursorPos, Mathf.Sin(Time.time * 10f) > 0f ? BetterChatBox.CursorString : BetterChatBox.EmptyCursorString);
+        var cursorChar = Mathf.Sin(Time.time * 10f) > 0f
+                            ? BetterChatBox.CursorString
+                            : BetterChatBox.EmptyCursorString;
+        __instance.chatText.text = chatMessage.Insert(cursorPos, cursorChar);
         __instance.chatMessage = chatMessage;
 
         if (SemiFunc.InputDown(InputKey.Confirm))
@@ -37,6 +40,38 @@ public class ChatPatch
         BetterChatBox.Instance.CursorPos = cursorPos;
 
         return false;
+    }
+
+    // Needed so that the saved chat message (if any) 
+    // isn't cleared when the chat is closed
+    [HarmonyPrefix, HarmonyPatch(nameof(ChatManager.StateInactive))]
+    public static bool StateInactivePrefix(ChatManager __instance)
+    {
+        ChatUI.instance.Hide();
+        __instance.chatActive = false;
+
+        var mmInstance = MenuManager.instance;
+        var currentPageIdx = mmInstance.currentMenuPage.menuPageIndex;
+
+        if (
+            currentPageIdx != MenuPageIndex.Escape
+            && currentPageIdx != MenuPageIndex.Settings
+            && SemiFunc.InputDown(InputKey.Chat)
+        )
+        {
+            TutorialDirector.instance.playerChatted = true;
+            mmInstance.MenuEffectClick(MenuManager.MenuClickEffectType.Action, null, 1f, 1f, soundOnly: true);
+            __instance.chatActive = !__instance.chatActive;
+            __instance.StateSet(ChatManager.ChatState.Active);
+        }
+
+        return false;
+    }
+
+    [HarmonyPostfix, HarmonyPatch(nameof(ChatManager.ChatReset))]
+    private static void ChatResetPostfix(ChatManager __instance)
+    {
+        BetterChatBox.Instance.CursorPos = 0;
     }
 
     [HarmonyPostfix, HarmonyPatch(nameof(ChatManager.StateSet))]
@@ -76,4 +111,5 @@ public class ChatPatch
         ChatUI.instance.SemiUISpringScale(0.05f, 5f, 0.2f);
         MenuManager.instance.MenuEffectClick(MenuManager.MenuClickEffectType.Deny, null, 1f, 1f, soundOnly: true);
     }
+
 }
