@@ -50,14 +50,13 @@ public class ChatPatch
         ChatUI.instance.Hide();
         __instance.chatActive = false;
 
-        var mmInstance = MenuManager.instance;
-        var currentPageIdx = mmInstance.currentMenuPage.menuPageIndex;
-
-        if (
-            currentPageIdx != MenuPageIndex.Escape
-            && currentPageIdx != MenuPageIndex.Settings
-            && SemiFunc.InputDown(InputKey.Chat)
-        )
+        MenuManager mmInstance = MenuManager.instance;
+        MenuPage currentMenuPage = mmInstance.currentMenuPage;
+        // TODO: figure out a name for this condition
+        bool cond = currentMenuPage is null ||
+                    (currentMenuPage.menuPageIndex != MenuPageIndex.Escape
+                    && currentMenuPage.menuPageIndex != MenuPageIndex.Settings);
+        if (cond && SemiFunc.InputDown(InputKey.Chat))
         {
             TutorialDirector.instance.playerChatted = true;
             mmInstance.MenuEffectClick(MenuManager.MenuClickEffectType.Action, null, 1f, 1f, soundOnly: true);
@@ -75,12 +74,12 @@ public class ChatPatch
     }
 
     [HarmonyPostfix, HarmonyPatch(nameof(ChatManager.StateSet))]
-    public static void StateSetPostfix(ChatManager __instance, ChatManager.ChatState newState)
+    public static void StateSetPostfix(ChatManager __instance, ChatManager.ChatState state)
     {
         if (
             __instance is null
             || __instance.chatText is null
-            || newState != ChatManager.ChatState.Active
+            || state != ChatManager.ChatState.Active
         )
             return;
 
