@@ -115,7 +115,7 @@ internal static class InputHandlers
         }
     }
 
-    internal static void HandleCursorNavigation(ref ChatManager chatManagerInstance, ref int cursorPos, string chatMessage)
+    internal static void HandleCursorNavigation(ref ChatManager chatManagerInstance, ref int cursorPos, ref string chatMessage)
     {
         if (Input.GetKeyUp(KeyCode.RightArrow)) BetterChatBox.Instance.RightArrowHeld = false;
         if (Input.GetKeyUp(KeyCode.LeftArrow)) BetterChatBox.Instance.LeftArrowHeld = false;
