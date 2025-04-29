@@ -17,23 +17,6 @@ A client-side overhaul of the chat box, making it editable and adding keybind su
 |       <kbd>Ctrl + Backspace</kbd>       | Delete whole word behind cursor                                         |
 |        <kbd>Ctrl + Delete</kbd>         | Delete whole word in front of cursor                                    |
 
-## Configuration
-
-### In game
-
-1. Ensure [REPOConfig](https://thunderstore.io/c/repo/p/nickklmao/REPOConfig/) is installed
-2. Launch the game and open the `Mods` menu
-
-### Through Gale
-
-1. Ensure BetterChatBox is installed to the current profile
-2. Edit values in the mod config tab
-
-
-### Manual
-
-1. Open `BepInEx/config/NoSpawnn.BetterChatBox.cfg`
-2. Edit the values inside
 
 ## Installation
 
@@ -51,3 +34,21 @@ A client-side overhaul of the chat box, making it editable and adding keybind su
 2. Download BetterChatBox
     - Download the latest release from [Thunderstore](https://thunderstore.io/c/repo/p/NoSpawnn/BetterChatBox/)
     - Place the `BetterChatBox.dll` inside `BepInEx/plugins/`
+
+## Configuration
+
+### In game
+
+1. Ensure [REPOConfig](https://thunderstore.io/c/repo/p/nickklmao/REPOConfig/) is installed
+2. Launch the game and open the `Mods` menu
+
+### Through Gale
+
+1. Ensure BetterChatBox is installed to the current profile
+2. Edit values in the mod config tab
+
+### Manual
+
+1. Open `BepInEx/config/NoSpawnn.BetterChatBox.cfg`
+2. Edit the values inside
+
