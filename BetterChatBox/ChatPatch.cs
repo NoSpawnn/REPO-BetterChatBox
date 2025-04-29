@@ -83,6 +83,8 @@ public class ChatPatch
         )
             return;
 
+        BetterChatBox.Instance.ResetButtonsHeldState();
+
         if (BetterChatBox.SavePreviousChatMessage.Value)
         {
             __instance.chatMessage = __instance

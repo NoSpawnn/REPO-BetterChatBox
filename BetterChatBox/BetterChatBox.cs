@@ -58,6 +58,14 @@ public class BetterChatBox : BaseUnityPlugin
         Harmony?.UnpatchSelf();
     }
 
+    internal void ResetButtonsHeldState()
+    {
+        BackspaceHeld = false;
+        DeleteHeld = false;
+        LeftArrowHeld = false;
+        RightArrowHeld = false;
+    }
+
     private void BindConfigs()
     {
         CursorMoveSpeed = Config.Bind(
