@@ -1,8 +1,9 @@
 # v1.0.2
 
 - Fixes
-  - Fixed game becoming unresponsive when opening the chat box after typing but not sending a message (thank you Wafflez on Discord!)
+  - Fixed game becoming unresponsive when opening the chat box after typing but not sending a message
   - Fixed messages not sending when the `SavePreviousChatMessage` config option was false
+  - Fixed repeating actions (delete, cursor move) continuing on next open if the chat box was closed with them being held
   
 - Removed
   - Removed [REPOConfig](https://thunderstore.io/c/repo/p/nickklmao/REPOConfig/) as a hard dependency
