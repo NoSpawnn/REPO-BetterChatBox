@@ -18,7 +18,7 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-$zipPath = Resolve-Path $zipName 
+$zipPath = [System.IO.Path]::GetFullPath($zipName)
 if (Test-Path $zipPath) {
     Write-Output ($zipName + " already exists, removing...")
     Remove-Item $zipPath
