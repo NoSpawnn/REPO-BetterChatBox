@@ -14,8 +14,8 @@ public class BetterChatBox : BaseUnityPlugin
     private ManualLogSource _logger => base.Logger;
     internal Harmony? Harmony { get; set; }
 
-    internal const string CursorString = "<b>|</b>";
-    internal const string EmptyCursorString = "<b> </b>"; // Not sure if the bold tags are actually needed but /shruge
+    internal const string CursorString = "|";
+    internal const string EmptyCursorString = " ";
     internal const int MaxChars = 50;
 
     internal int CursorPos { get; set; }
