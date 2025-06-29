@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
@@ -17,6 +18,7 @@ public class BetterChatBox : BaseUnityPlugin
     internal const string CursorString = "|";
     internal const string EmptyCursorString = " ";
     internal const int MaxChars = 50;
+    internal static bool ShouldLimitChatLength = true;
 
     internal int CursorPos { get; set; }
     internal float DeleteTimer { get; set; }
@@ -40,6 +42,12 @@ public class BetterChatBox : BaseUnityPlugin
         // Prevent the plugin from being deleted
         this.gameObject.transform.parent = null;
         this.gameObject.hideFlags = HideFlags.HideAndDontSave;
+
+        if (Chainloader.PluginInfos.ContainsKey("nickklmao.nolimitchatbox"))
+        {
+            Logger.LogInfo("nolimitchatbox is installed, removing chat length limit");
+            ShouldLimitChatLength = false;
+        }
 
         Patch();
         BindConfigs();

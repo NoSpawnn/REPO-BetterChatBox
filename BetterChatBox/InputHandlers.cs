@@ -72,7 +72,7 @@ internal static class InputHandlers
 
         foreach (var c in Input.inputString.Where(c => !char.IsControl(c)))
         {
-            if (chatMessage.Length < BetterChatBox.MaxChars)
+            if (!BetterChatBox.ShouldLimitChatLength || chatMessage.Length < BetterChatBox.MaxChars)
             {
                 chatManagerInstance.prevChatMessage = chatMessage;
                 chatMessage = chatMessage.Insert(cursorPos, c.ToString());
@@ -179,7 +179,7 @@ internal static class InputHandlers
         {
             string clipboardText = GUIUtility.systemCopyBuffer.WithAllWhitespaceStripped();
             string newText = chatMessage.Insert(cursorPos, clipboardText);
-            if (clipboardText.IsNullOrWhiteSpace() || newText.Length >= BetterChatBox.MaxChars)
+            if (clipboardText.IsNullOrWhiteSpace() || (BetterChatBox.ShouldLimitChatLength && newText.Length >= BetterChatBox.MaxChars))
             {
                 ChatPatch.ChatFailInputEffect();
             }
