@@ -1,3 +1,11 @@
+# v1.0.3
+
+- Added
+  - Compatibility with [nolimitchatbox](https://thunderstore.io/c/repo/p/nickklmao/NoLimitChatbox/) by nickklmao
+
+- Fixes
+  - Fixed rich text displaying improperly on newer versions of the game
+
 # v1.0.2
 
 - Fixes
