@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BetterChatBox;
 
-[BepInPlugin("NoSpawnn.BetterChatBox", "BetterChatBox", "1.0.2")]
+[BepInPlugin("NoSpawnn.BetterChatBox", "BetterChatBox", "1.0.3")]
 public class BetterChatBox : BaseUnityPlugin
 {
     internal static BetterChatBox Instance { get; private set; } = null!;
